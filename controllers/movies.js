@@ -1,11 +1,11 @@
 /*
-GET  /movies - возвращает все сохранённые текущим  пользователем фильмы
-POST /movies - создаёт фильм с переданными в теле country, director, duration, year,
++ GET  /movies - возвращает все сохранённые текущим  пользователем фильмы
++ POST /movies - создаёт фильм с переданными в теле country, director, duration, year,
                                                   description, image,
                                                   trailer, nameRU, nameEN и thumbnail, movieId
-DELETE /movies/_id -  удаляет сохранённый фильм по id
-PUT /cards/:cardId/likes — поставить лайк карточке фильма
-DELETE /cards/:cardId/likes — убрать лайк с карточки фильма
++ DELETE /movies/_id -  удаляет сохранённый фильм по id
+- PUT /cards/:cardId/likes — поставить лайк карточке фильма
+- DELETE /cards/:cardId/likes — убрать лайк с карточки фильма
 */
 
 const Movie = require('../models/movie');
@@ -17,11 +17,8 @@ const DelMovieError = require('../errors/del-movie-err');
 
 // GET /movies — возвращает все movies
 module.exports.getMovies = (req, res, next) => {
-  console.log('getMovies !!! ');
-  console.log('getMovies: req.user._id = ', req.user._id);
   Movie.find({ owner: req.user._id }).sort({ createdAt: -1 })
     .then((movies) => {
-      console.log('1111 ', req.body);
       res.send({ movies });
     })
     .catch(next);
@@ -29,7 +26,6 @@ module.exports.getMovies = (req, res, next) => {
 
 // POST /movies — создаёт movies
 module.exports.addMovieToDataBase = (req, res, next) => {
-  console.log('!!!! addMovieToDataBase !!! ');
   const {
     country,
     director,
@@ -43,12 +39,6 @@ module.exports.addMovieToDataBase = (req, res, next) => {
     nameRU,
     nameEN,
   } = req.body;
-  console.log(' req.user = ', req.user);
-  // console.log(' req.user._id = ', req.user._id);
-  console.log(' req.body = ', req.body);
-
-  // const owner = req.user._id;
-  // console.log(' owner = ', owner);
 
   Movie.create({
     country,
@@ -59,13 +49,12 @@ module.exports.addMovieToDataBase = (req, res, next) => {
     image,
     trailerLink,
     thumbnail,
-    owner: req.user._id, //----
+    owner: req.user._id,
     movieId,
     nameRU,
     nameEN,
   })
     .then((movie) => {
-      console.log('Movie.create movie = ', movie);
       res.send(movie);
     })
     .catch((err) => {
@@ -79,7 +68,6 @@ module.exports.addMovieToDataBase = (req, res, next) => {
 
 // DELETE /movies/:movieId — удаляет карточку по идентификатору
 module.exports.deleteMovie = (req, res, next) => {
-  console.log('deleteMovie !!!');
   Movie.findById(req.params._id)
     .then((movies) => {
       if (!movies) {

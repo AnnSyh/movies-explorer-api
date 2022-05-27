@@ -20,6 +20,5 @@ module.exports = (req, res, next) => {
   }
 
   req.user = payload;// записываем пейлоуд в объект запроса
-  console.log('middlewares; auth.js: req.user = ', req.user);
   return next();// пропускаем запрос дальше
 };
