@@ -10,6 +10,7 @@ const app = express();
 const routes = require('./routes/routes');
 
 const { PORT = 3000 } = process.env; // Слушаем 3000 порт
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 // функция обработки ошибок при подключении к серверу mongo
 async function main() {
@@ -44,15 +45,15 @@ const cors = (req, res, next) => {
 
   return next();
 };
-
 app.use(cors);
-
 app.use(BodyParser.json()); // подключили миддлвару кот достает значения из тела запроса
 
 // подключаем роуты и всё остальное...
 app.use(express.json());
+app.use(requestLogger); // подключаем логгер запросов
 app.use(routes);
 
+app.use(errorLogger); // подключаем логгер ошибок
 // централизованная обработка ошибок
 app.use(errors());
 app.use(cenralErrors);

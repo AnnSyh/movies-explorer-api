@@ -18,6 +18,7 @@ app.get('/crash-test', () => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
+
 // роуты, не требующие авторизации
 //  регистрация
 app.post('/signup', celebrate({
