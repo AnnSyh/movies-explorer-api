@@ -58,7 +58,7 @@ module.exports.addMovieToDataBase = (req, res, next) => {
     image,
     trailerLink,
     thumbnail,
-    // owner: req.user._id, //----
+    owner: req.user._id, //----
     movieId,
     nameRU,
     nameEN,
