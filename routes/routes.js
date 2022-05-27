@@ -62,8 +62,6 @@ app.use(moviesRouter);
 console.log('22222222222');
 
 // Обработаем некорректный маршрут и вернём ошибку 404
-app.use('*', auth, (err, next) => next(new NotFoundError(`Ошибка err= ${err.name}  err= ${err.message}`)));
-// app.use('*', auth, (req, res, next) => next(new NotFoundError
-// (`Страницы по адресу ${req.baseUrl} не существует;`)));
+app.use('*', auth, (req, res, next) => next(new NotFoundError(`Страницы по адресу ${req.baseUrl} не существует;`)));
 
 module.exports = app;

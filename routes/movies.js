@@ -27,7 +27,7 @@ router.post('/movies', celebrate({
   }),
 }), addMovieToDataBase);
 
-router.delete('/movies/:movieId', celebrate({
+router.delete('/movies/:_id', celebrate({
   params: Joi.object().keys({
     _id: Joi.string().alphanum(),
   }),
