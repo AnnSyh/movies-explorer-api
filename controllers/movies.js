@@ -18,6 +18,7 @@ const DelMovieError = require('../errors/del-movie-err');
 // GET /movies — возвращает все movies
 module.exports.getMovies = (req, res, next) => {
   console.log('getMovies !!! ');
+  console.log('getMovies: req.user._id = ', req.user._id);
   Movie.find({ owner: req.user._id }).sort({ createdAt: -1 })
     .then((movies) => {
       console.log('1111 ', req.body);

@@ -4,10 +4,10 @@ const BadAuthError = require('../errors/bad-auth-err');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
-module.exports = (error, req, res, next) => {
+module.exports = (req, res, next) => {
   const { authorization } = req.headers; // достаём авторизационный заголовок
   if (!authorization || !authorization.startsWith('Bearer ')) { // убеждаемся, что он есть или начинается с Bearer
-    return next(new BadAuthError(`err.message = ${error.message} ; Необходима авторизация 1.`));
+    return next(new BadAuthError('Необходима авторизация 1.'));
   }
 
   const token = authorization.replace('Bearer ', ''); // извлечём токен
