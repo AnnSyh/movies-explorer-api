@@ -43,7 +43,7 @@ module.exports.login = (req, res, next) => {
 
 // + GET /users/:userId - возвращает пользователя по _id
 module.exports.getUserById = (req, res, next) => {
-  console.log('4444444444444');
+  // console.log('4444444444444');
   User.findById(req.params.userId)
     .orFail(() => {
       next(new NotFoundError('_id Ошибка. Пользователь не найден, попробуйте еще раз'));
