@@ -132,6 +132,9 @@ module.exports.updateUserProfile = (req, res, next) => {
       if (err.name === 'ValidationError') {
         return next(new BadRequestError('Переданы некорректные данные при обновлении пользователя'));
       }
+      if (err.code === 11000) {
+        next(new ExistEmailError('Пользователь с таким email зарегистрирован'));
+      }
       return next(err);
     });
 };
