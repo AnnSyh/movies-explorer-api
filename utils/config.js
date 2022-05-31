@@ -9,10 +9,10 @@ const limiter = rateLimit({
 
 const mongoDataBaseAddress = 'mongodb://localhost:27017/moviesdb';
 
-const SEKRET_KEY = 'dev-secret';
+const devJwtKey = 'dev-secret';
 
 module.exports = {
   limiter,
   mongoDataBaseAddress,
-  SEKRET_KEY,
+  devJwtKey,
 };
