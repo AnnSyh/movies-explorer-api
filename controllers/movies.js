@@ -4,8 +4,6 @@
                                                   description, image,
                                                   trailer, nameRU, nameEN и thumbnail, movieId
 + DELETE /movies/_id -  удаляет сохранённый фильм по id
-- PUT /cards/:cardId/likes — поставить лайк карточке фильма
-- DELETE /cards/:cardId/likes — убрать лайк с карточки фильма
 */
 
 const Movie = require('../models/movie');
@@ -81,48 +79,6 @@ module.exports.deleteMovie = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'CastError') {
         return next(new BadRequestError('Переданы некорректные данные при удалении карточки фильма.'));
-      }
-      return next(err);
-    });
-};
-
-// PUT /movies/:movieId/likes — поставить лайк карточке фильма
-module.exports.likeMovie = (req, res, next) => {
-  Movie.findByIdAndUpdate(
-    req.params.movieId,
-    { $addToSet: { likes: req.user._id } }, // добавить _id в массив, если его там нет
-    { new: true },
-  )
-    .then((movies) => {
-      if (!movies) {
-        throw new NotFoundError('Передан несуществующий _id карточки фильма.');
-      }
-      res.send({ movies });
-    })
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        return next(new BadRequestError('Переданы некорректные данные для изменения лайка.'));
-      }
-      return next(err);
-    });
-};
-
-// DELETE /movies/:movieId/likes — убрать лайк с карточки фильма
-module.exports.dislikeMovie = (req, res, next) => {
-  Movie.findByIdAndUpdate(
-    req.params.movieId,
-    { $pull: { likes: req.user._id } }, // убрать _id из массива
-    { new: true },
-  )
-    .then((movies) => {
-      if (!movies) {
-        throw new NotFoundError('Передан несуществующий _id карточки фильма.');
-      }
-      res.send({ movies });
-    })
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        return next(new BadRequestError('Переданы некорректные данные для изменения лайка.'));
       }
       return next(err);
     });
