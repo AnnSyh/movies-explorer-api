@@ -1,18 +1,10 @@
 /*
-
-//  login (/POST)  авторизация(залогинивание) пользователя по email и password
-// GET /users/:userId - возвращает пользователя по _id
-//  GET /users — возвращает всех пользователей
-// POST /signup — создаёт пользователя по обязательным полям email и password
-
+login   /POST  авторизация(залогинивание) пользователя по email и password
+GET     /users/:userId - возвращает пользователя по _id
+GET     /users — возвращает всех пользователей
+POST    /signup — создаёт пользователя по обязательным полям email и password
 GET     /users/me       - возвращает информацию о пользователе (email и имя)
 PATCH   /users/me       - обновляет информацию о пользователе (email и имя)
-
-GET     /movies         - возвращает все сохранённые текущим  пользователем фильмы
-POST    /movies         - создаёт фильм с переданными в теле: country, director,
-                          duration, year, description, image, trailer, nameRU,
-                          nameEN и thumbnail, movieId
-DELETE  /movies/_id     - удаляет сохранённый фильм по id
 */
 
 const bcrypt = require('bcrypt'); // импортируем bcrypt
@@ -27,6 +19,15 @@ const BadRequestError = require('../errors/bad-request-err');
 const NotFoundError = require('../errors/not-found-err');
 const ExistEmailError = require('../errors/exist-email-err');
 
+const {
+  USER_NOT_FOUND,
+  WRONG_DATA_PROFILE,
+  WRONG_DATA_USER,
+  EMAIL_ALREADY_EXISTS,
+  WRONG_DATA_USER_CREATE,
+  WRONG_DATA_USER_UPDATE,
+} = require('../utils/constants');
+
 // + login (/POST)  авторизация(залогинивание) пользователя по email и password
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
@@ -37,27 +38,28 @@ module.exports.login = (req, res, next) => {
       res.send({ token });
     })
     .catch(() => {
-      next(new BadAuthError('Неправильные почта или пароль.'));
+      next(new BadAuthError(WRONG_DATA_PROFILE));
     });
 };
 
 // + GET /users/:userId - возвращает пользователя по _id
 module.exports.getUserById = (req, res, next) => {
-  // console.log('4444444444444');
   User.findById(req.params.userId)
     .orFail(() => {
-      next(new NotFoundError('_id Ошибка. Пользователь не найден, попробуйте еще раз'));
+      next(new NotFoundError(USER_NOT_FOUND));
     })
     .then((user) => {
       if (user) {
         res.send(user);
       } else {
-        throw (new NotFoundError('_id Ошибка. Пользователь не найден, попробуйте еще раз'));
+        throw (new NotFoundError(USER_NOT_FOUND));
       }
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        return next(new BadRequestError(`_id Ошибка. ${req.params} Введен некорректный id пользователя`));
+        // eslint-disable-next-line max-len
+        // return next(new BadRequestError(`_id Ошибка. ${req.params} Введен некорректный id пользователя`));
+        return next(new BadRequestError(WRONG_DATA_USER));
       }
       return next(err);
     });
@@ -89,16 +91,14 @@ module.exports.createUser = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return next(new BadRequestError('Переданы некорректные данные при создании пользователя'));
+        return next(new BadRequestError(WRONG_DATA_USER_CREATE));
       }
       if (err.code === 11000) {
-        return next(new ExistEmailError('Передан уже зарегистрированный email.'));
+        return next(new ExistEmailError(EMAIL_ALREADY_EXISTS));
       }
       return next(err);
     });
 };
-
-// + GET /users/   - возвращает список пользователей
 
 // GET /users/me  - возвращает информацию о пользователе (email и имя)
 module.exports.getCurrentUser = (req, res, next) => {
@@ -106,7 +106,7 @@ module.exports.getCurrentUser = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
       if (!user) {
-        return next(new NotFoundError('GET /users/me Пользователь по указанному _id не найден.'));
+        return next(new NotFoundError(USER_NOT_FOUND));
       }
       return res.status(200).send(user);
     })
@@ -120,16 +120,16 @@ module.exports.updateUserProfile = (req, res, next) => {
   User.findByIdAndUpdate(req.user._id, { name, email }, { new: true, runValidators: true })
     .then((user) => {
       if (!user) {
-        return next(new NotFoundError('Пользователь по указанному _id не найден.'));
+        return next(new NotFoundError(USER_NOT_FOUND));
       }
       return res.send({ data: user });
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return next(new BadRequestError('Переданы некорректные данные при обновлении пользователя'));
+        return next(new BadRequestError(WRONG_DATA_USER_UPDATE));
       }
       if (err.code === 11000) {
-        next(new ExistEmailError('Пользователь с таким email зарегистрирован'));
+        next(new ExistEmailError(EMAIL_ALREADY_EXISTS));
       }
       return next(err);
     });

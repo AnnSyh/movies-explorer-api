@@ -13,6 +13,19 @@ const IMAGE_REGEX = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&
 const NAMERU = /[\Wа-яА-ЯёЁ0-9\s\-?]+/;
 const NAMEEN = /[\w\d\s\-?]+/i;
 
+const ACCESS_ERROR = 'Попытка удалить чужую карточку фильма.';
+const MOVIE_NOT_FOUND = 'Карточка фильма с указанным _id не найдена.';
+const WRONG_DATA_MOVIE = 'Переданы некорректные данные при создании карточки фильма.';
+const WRONG_DATA_MOVIE_DELETE = 'Переданы некорректные данные при удалении карточки фильма.';
+
+const WRONG_DATA_PROFILE = 'Неправильные почта или пароль.';
+const USER_NOT_FOUND = 'Пользователь не найден, попробуйте еще раз';
+const WRONG_DATA_USER = 'Введен некорректный id пользователя';
+const WRONG_DATA_USER_UPDATE = 'Переданы некорректные данные при обновлении пользователя';
+const WRONG_DATA_USER_CREATE = 'Переданы некорректные данные при создании пользователя';
+
+const EMAIL_ALREADY_EXISTS = 'Введен некорректный id пользователя';
+
 module.exports = {
   ERROR_CODE_BAD_REQUEST,
   ERROR_CODE_NOT_FOUND,
@@ -25,4 +38,14 @@ module.exports = {
   IMAGE_REGEX,
   NAMERU,
   NAMEEN,
+  ACCESS_ERROR,
+  MOVIE_NOT_FOUND,
+  WRONG_DATA_MOVIE,
+  WRONG_DATA_MOVIE_DELETE,
+  WRONG_DATA_PROFILE,
+  USER_NOT_FOUND,
+  WRONG_DATA_USER,
+  WRONG_DATA_USER_CREATE,
+  WRONG_DATA_USER_UPDATE,
+  EMAIL_ALREADY_EXISTS,
 };

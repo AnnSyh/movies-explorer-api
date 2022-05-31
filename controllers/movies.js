@@ -11,7 +11,13 @@ const Movie = require('../models/movie');
 const BadRequestError = require('../errors/bad-request-err');
 const NotFoundError = require('../errors/not-found-err');
 const DelMovieError = require('../errors/del-movie-err');
-// const DelCardError = require('../errors/del-card-err');
+
+const {
+  WRONG_DATA_MOVIE,
+  WRONG_DATA_MOVIE_DELETE,
+  MOVIE_NOT_FOUND,
+  ACCESS_ERROR,
+} = require('../utils/constants');
 
 // GET /movies — возвращает все movies
 module.exports.getMovies = (req, res, next) => {
@@ -58,7 +64,7 @@ module.exports.addMovieToDataBase = (req, res, next) => {
     .catch((err) => {
       // console.log('catch err = ', err);
       if (err.name === 'ValidationError') {
-        return next(new BadRequestError('Переданы некорректные данные при создании карточки фильма.'));
+        return next(new BadRequestError(WRONG_DATA_MOVIE));
       }
       return next(err);
     });
@@ -69,16 +75,16 @@ module.exports.deleteMovie = (req, res, next) => {
   Movie.findById(req.params._id)
     .then((movies) => {
       if (!movies) {
-        throw new NotFoundError('Карточка фильма с указанным _id не найдена.');
+        throw new NotFoundError(MOVIE_NOT_FOUND);
       } else if (!movies.owner.equals(req.user._id)) {
-        throw new DelMovieError('Попытка удалить чужую карточку фильма.');
+        throw new DelMovieError(ACCESS_ERROR);
       } else {
         return movies.remove().then(() => res.status(200).send(movies));
       }
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        return next(new BadRequestError('Переданы некорректные данные при удалении карточки фильма.'));
+        return next(new BadRequestError(WRONG_DATA_MOVIE_DELETE));
       }
       return next(err);
     });
