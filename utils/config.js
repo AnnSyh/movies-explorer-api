@@ -7,8 +7,8 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
-const mongoDataBaseAddress = 'mongodb://localhost:27017/moviesdb';
+const SEKRET_KEY = 'mongodb://localhost:27017/moviesdb';
 
 const secretKeyForDev = 'dev-secret';
 
-module.exports = { limiter, mongoDataBaseAddress, secretKeyForDev };
+module.exports = { limiter, SEKRET_KEY, secretKeyForDev };

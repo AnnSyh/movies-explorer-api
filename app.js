@@ -10,7 +10,7 @@ const cenralErrors = require('./middlewares/central-err');
 const app = express();
 const routes = require('./routes/routes');
 
-const { limiter, mongoDataBaseAddress } = require('./utils/config');
+const { limiter, SEKRET_KEY } = require('./utils/config');
 
 const { PORT = 3000, NODE_ENV, DATABASE_URL } = process.env; // Слушаем 3000 порт
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -19,7 +19,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 async function main() {
   try {
     // await mongoose.connect('mongodb://localhost:27017/moviesdb');
-    await mongoose.connect(NODE_ENV === 'production' ? DATABASE_URL : mongoDataBaseAddress);
+    await mongoose.connect(NODE_ENV === 'production' ? DATABASE_URL : SEKRET_KEY);
   } catch (error) {
     console.log(error);
   }
