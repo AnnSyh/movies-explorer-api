@@ -1,4 +1,4 @@
-const { ERROR_CODE_DEL_MOVIE } = require('../constants');
+const { ERROR_CODE_DEL_MOVIE } = require('../utils/constants');
 
 class DelMovieError extends Error {
   constructor(message) {

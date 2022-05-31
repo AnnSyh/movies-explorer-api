@@ -1,4 +1,4 @@
-const { ERROR_CODE_INTERNAL } = require('../constants');
+const { ERROR_CODE_INTERNAL } = require('../utils/constants');
 
 module.exports = (err, req, res, next) => {
   const { statusCode = ERROR_CODE_INTERNAL, message } = err;

@@ -18,7 +18,7 @@ DELETE  /movies/_id     - удаляет сохранённый фильм по 
 const bcrypt = require('bcrypt'); // импортируем bcrypt
 const jwt = require('jsonwebtoken'); // импортируем jwt
 const User = require('../models/user');
-const { SEKRET_KEY } = require('../constants');
+const { SEKRET_KEY } = require('../utils/constants');
 
 const SALT_ROUNDS = 10;
 

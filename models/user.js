@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const isEmail = require('validator/lib/isEmail');
 const bcrypt = require('bcrypt'); // импортируем bcrypt ?? bcryptjs
 
-const { ERROR_CODE_BAD_AUTH } = require('../constants');
+const { ERROR_CODE_BAD_AUTH } = require('../utils/constants');
 
 // Опишем схему:
 const userSchema = new mongoose.Schema({

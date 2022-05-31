@@ -1,4 +1,4 @@
-const { ERROR_CODE_EXIST_EMAIL } = require('../constants');
+const { ERROR_CODE_EXIST_EMAIL } = require('../utils/constants');
 
 class ExistEmailError extends Error {
   constructor(message) {

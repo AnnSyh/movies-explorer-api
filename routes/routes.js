@@ -8,7 +8,7 @@ const {
   createUser,
   login,
 } = require('../controllers/user');
-const { AVATAR_REGEX } = require('../constants');
+const { AVATAR_REGEX } = require('../utils/constants');
 const auth = require('../middlewares/auth'); // авторизация
 
 const app = express();
