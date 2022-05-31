@@ -3,7 +3,7 @@ const { celebrate, Joi } = require('celebrate');
 const {
   IMAGE_REGEX,
   NAMERU,
-  NAMEEN
+  NAMEEN,
 } = require('../utils/constants');
 
 const {
