@@ -72,11 +72,7 @@ module.exports.getUsers = (req, res, next) => {
 // ----------------------
 // + POST /signup — создаёт пользователя по обязательным полям email и password
 module.exports.createUser = (req, res, next) => {
-  const { name, email, password } = req.body;
-
-  if (!email || !password) {
-    return res.status(BadRequestError).send({ message: 'Поля email и password обязательны' });
-  }
+  const { name } = req.body;
   // хешируем пароль
   return bcrypt.hash(req.body.password, SALT_ROUNDS)
     .then((hash) => User.create({

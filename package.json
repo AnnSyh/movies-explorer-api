@@ -1,7 +1,7 @@
 {
   "name": "movies-explorer-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Бэкенд для приложения movies-explorer",
   "main": "index.js",
   "scripts": {
     "lint": "npx eslint .",
@@ -12,7 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/AnnSyh/movies-explorer-api.git"
   },
-  "author": "",
+  "author": "Ann Syharevskaya",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/AnnSyh/movies-explorer-api/issues"
