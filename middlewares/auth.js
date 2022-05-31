@@ -1,11 +1,11 @@
+const { NODE_ENV, JWT_SECRET } = process.env;
 const jwt = require('jsonwebtoken');
 const { devJwtKey } = require('../utils/config');
 const BadAuthError = require('../errors/bad-auth-err');
 
-const { NODE_ENV, JWT_SECRET } = process.env;
-
 module.exports = (req, res, next) => {
   const { authorization } = req.headers; // достаём авторизационный заголовок
+
   if (!authorization || !authorization.startsWith('Bearer ')) { // убеждаемся, что он есть или начинается с Bearer
     return next(new BadAuthError('111 Необходима авторизация.'));
   }
