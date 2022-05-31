@@ -7,7 +7,7 @@ const { NODE_ENV, JWT_SECRET } = process.env;
 module.exports = (req, res, next) => {
   const { authorization } = req.headers; // достаём авторизационный заголовок
   if (!authorization || !authorization.startsWith('Bearer ')) { // убеждаемся, что он есть или начинается с Bearer
-    return next(new BadAuthError('Необходима авторизация 1.'));
+    return next(new BadAuthError('Необходима авторизация.'));
   }
 
   const token = authorization.replace('Bearer ', ''); // извлечём токен
@@ -16,7 +16,7 @@ module.exports = (req, res, next) => {
   try {
     payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : SEKRET_KEY); // попытаемся верифицировать токен
   } catch (err) {
-    next(new BadAuthError(`err.message = ${err.message} ; Необходима авторизация 2.`));
+    next(new BadAuthError(`err.message = ${err.message} ; Необходима авторизация.`));
   }
 
   req.user = payload;// записываем пейлоуд в объект запроса
