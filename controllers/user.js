@@ -6,11 +6,11 @@ POST    /signup — создаёт пользователя по обязате�
 GET     /users/me       - возвращает информацию о пользователе (email и имя)
 PATCH   /users/me       - обновляет информацию о пользователе (email и имя)
 */
-
+const { NODE_ENV, JWT_SECRET } = process.env;
 const bcrypt = require('bcrypt'); // импортируем bcrypt
 const jwt = require('jsonwebtoken'); // импортируем jwt
 const User = require('../models/user');
-const { SEKRET_KEY } = require('../utils/constants');
+const { SEKRET_KEY } = require('../utils/config');
 
 const SALT_ROUNDS = 10;
 
@@ -34,7 +34,8 @@ module.exports.login = (req, res, next) => {
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, SEKRET_KEY, { expiresIn: '7d' });
+      // const token = jwt.sign({ _id: user._id }, SEKRET_KEY, { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : SEKRET_KEY, { expiresIn: '7d' });
       res.send({ token });
     })
     .catch(() => {

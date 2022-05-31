@@ -11,4 +11,8 @@ const mongoDataBaseAddress = 'mongodb://localhost:27017/moviesdb';
 
 const SEKRET_KEY = 'dev-secret';
 
-module.exports = { limiter, mongoDataBaseAddress, SEKRET_KEY };
+module.exports = {
+  limiter,
+  mongoDataBaseAddress,
+  SEKRET_KEY,
+};
