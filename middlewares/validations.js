@@ -75,10 +75,10 @@ const validateCreateMovie = celebrate({
   }),
 });
 
-// DELETE /movies/:movieId
+// DELETE /movies/:_id
 const validateDeleteMovie = celebrate({
   params: Joi.object().keys({
-    movieId: Joi.string().required().length(24).hex(),
+    _id: Joi.string().required().length(24).hex(),
   }),
 });
 

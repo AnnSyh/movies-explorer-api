@@ -70,7 +70,7 @@ module.exports.addMovieToDataBase = (req, res, next) => {
     });
 };
 
-// DELETE /movies/:movieId — удаляет карточку по идентификатору
+// DELETE /movies/:_id — удаляет карточку по идентификатору
 module.exports.deleteMovie = (req, res, next) => {
   Movie.findById(req.params._id)
     .then((movies) => {
