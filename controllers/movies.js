@@ -56,7 +56,7 @@ module.exports.addMovieToDataBase = (req, res, next) => {
       res.send(movie);
     })
     .catch((err) => {
-      console.log('catch err = ', err);
+      // console.log('catch err = ', err);
       if (err.name === 'ValidationError') {
         return next(new BadRequestError('Переданы некорректные данные при создании карточки фильма.'));
       }

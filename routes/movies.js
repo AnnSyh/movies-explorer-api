@@ -1,12 +1,15 @@
 const router = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
+const {
+  IMAGE_REGEX,
+  NAMERU,
+  NAMEEN
+} = require('../utils/constants');
 
 const {
   getMovies,
   addMovieToDataBase,
   deleteMovie,
-  // likeMovie,
-  // dislikeMovie,
 } = require('../controllers/movies');
 
 router.get('/movies', getMovies);
@@ -18,12 +21,12 @@ router.post('/movies', celebrate({
     duration: Joi.number().required(),
     year: Joi.string().required(),
     description: Joi.string().required(),
-    image: Joi.string().required().pattern(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/),
-    trailerLink: Joi.string().required().pattern(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/),
-    thumbnail: Joi.string().required().pattern(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/),
+    image: Joi.string().required().pattern(IMAGE_REGEX),
+    trailerLink: Joi.string().required().pattern(IMAGE_REGEX),
+    thumbnail: Joi.string().required().pattern(IMAGE_REGEX),
     movieId: Joi.number().required(),
-    nameRU: Joi.string().required().pattern(/[\Wа-яА-ЯёЁ0-9\s\-?]+/),
-    nameEN: Joi.string().required().pattern(/[\w\d\s\-?]+/i),
+    nameRU: Joi.string().required().pattern(NAMERU),
+    nameEN: Joi.string().required().pattern(NAMEEN),
   }),
 }), addMovieToDataBase);
 
@@ -32,17 +35,5 @@ router.delete('/movies/:_id', celebrate({
     _id: Joi.string().alphanum(),
   }),
 }), deleteMovie);
-
-// router.put('/movies/:movieId/likes', celebrate({
-//   params: Joi.object().keys({
-//     movieId: Joi.string().hex().length(24),
-//   }),
-// }), likeMovie);
-
-// router.delete('/movies/:movieId/likes', celebrate({
-//   params: Joi.object().keys({
-//     movieId: Joi.string().hex().length(24),
-//   }),
-// }), dislikeMovie);
 
 module.exports = router;

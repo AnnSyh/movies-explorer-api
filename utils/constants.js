@@ -9,6 +9,10 @@ const ERROR_CODE_EXIST_EMAIL = 409;
 const AVATAR_REGEX = /^https?:\/\/(www\.)?[a-zA-Z\d-]+\.[\w\d\-.~:/?#[\]@!$&'()*+,;=]{2,}#?$/;
 const LINK_REGEX = /^https?:\/\/(www\.)?[a-zA-Z\d-]+\.[\w\d\-.~:/?#[\]@!$&'()*+,;=]{2,}#?$/;
 
+const IMAGE_REGEX = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/;
+const NAMERU = /[\Wа-яА-ЯёЁ0-9\s\-?]+/;
+const NAMEEN = /[\w\d\s\-?]+/i;
+
 module.exports = {
   ERROR_CODE_BAD_REQUEST,
   ERROR_CODE_NOT_FOUND,
@@ -18,4 +22,7 @@ module.exports = {
   ERROR_CODE_EXIST_EMAIL,
   AVATAR_REGEX,
   LINK_REGEX,
+  IMAGE_REGEX,
+  NAMERU,
+  NAMEEN,
 };
