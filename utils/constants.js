@@ -23,9 +23,11 @@ const USER_NOT_FOUND = 'Пользователь не найден, попроб
 const WRONG_DATA_USER = 'Введен некорректный id пользователя';
 const WRONG_DATA_USER_UPDATE = 'Переданы некорректные данные при обновлении пользователя';
 const WRONG_DATA_USER_CREATE = 'Переданы некорректные данные при создании пользователя';
-const EMAIL_ALREADY_EXISTS = 'Введен некорректный id пользователя';
+const EMAIL_ALREADY_EXISTS = 'Введен некорректный email пользователя';
 
 const WRONG_URL_FORMAT = 'Некорректный адрес URL.';
+
+const AUTHORIZATION_REQUIRED = 'Необходима авторизация.';
 
 module.exports = {
   ERROR_CODE_BAD_REQUEST,
@@ -50,4 +52,5 @@ module.exports = {
   WRONG_DATA_USER_UPDATE,
   EMAIL_ALREADY_EXISTS,
   WRONG_URL_FORMAT,
+  AUTHORIZATION_REQUIRED,
 };
