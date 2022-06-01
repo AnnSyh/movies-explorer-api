@@ -79,7 +79,7 @@ module.exports.deleteMovie = (req, res, next) => {
       } else if (!movies.owner.equals(req.user._id)) {
         throw new DelMovieError(ACCESS_ERROR);
       } else {
-        return movies.remove().then(() => res.status(200).send(movies));
+        return movies.remove().then(() => res.send(movies));
       }
     })
     .catch((err) => {

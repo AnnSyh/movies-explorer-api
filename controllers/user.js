@@ -85,7 +85,7 @@ module.exports.createUser = (req, res, next) => {
       password: hash,
     }))
     .then((user) => {
-      res.status(200).send({
+      res.send({
         name: user.name,
         _id: user._id,
         email: user.email,
@@ -110,7 +110,7 @@ module.exports.getCurrentUser = (req, res, next) => {
       if (!user) {
         return next(new NotFoundError(USER_NOT_FOUND));
       }
-      return res.status(200).send(user);
+      return res.send(user);
     })
     .catch((err) => next(err));
 };
@@ -124,7 +124,7 @@ module.exports.updateUserProfile = (req, res, next) => {
       if (!user) {
         return next(new NotFoundError(USER_NOT_FOUND));
       }
-      return res.send({ data: user });
+      return res.send(user);
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
