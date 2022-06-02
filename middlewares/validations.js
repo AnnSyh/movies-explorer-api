@@ -2,7 +2,6 @@ const { celebrate, Joi } = require('celebrate');
 const validator = require('validator');
 const isURL = require('validator/lib/isURL');
 const { WRONG_URL_FORMAT } = require('../utils/constants');
-const { AVATAR_REGEX } = require('../utils/constants');
 
 const validationUrl = (value, helpers) => {
   if (isURL(value)) {
@@ -20,20 +19,8 @@ const {
 const validateCreateUser = celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
-    about: Joi.string().min(2).max(30),
-    email: Joi.string().required().custom((value, helpers) => {
-      if (validator.isEmail(value)) {
-        return value;
-      }
-      return helpers.message('Некорректный email');
-    }),
+    email: Joi.string().email(),
     password: Joi.string().required(),
-    avatar: Joi.string().custom((value, helpers) => {
-      if (AVATAR_REGEX.test(value)) {
-        return value;
-      }
-      return helpers.message('Некорректная ссылка');
-    }),
   }),
 });
 
