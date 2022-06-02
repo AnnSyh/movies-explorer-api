@@ -20,10 +20,10 @@ module.exports = (req, res, next) => {
   try {
     payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : devJwtKey); // попытаемся верифицировать токен
   } catch (err) {
-    next(new BadAuthError(`err.message = ${err.message} ;222 Необходима авторизация.`));
+    next(new BadAuthError(AUTHORIZATION_REQUIRED));
   }
 
   req.user = payload;// записываем пейлоуд в объект запроса
-  console.log('req.user = ', req.user);
+  // console.log('req.user = ', req.user);
   return next();// пропускаем запрос дальше
 };

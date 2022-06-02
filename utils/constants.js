@@ -29,6 +29,10 @@ const WRONG_URL_FORMAT = 'Некорректный адрес URL.';
 
 const AUTHORIZATION_REQUIRED = 'Необходима авторизация.';
 
+const SERVER_ERROR = 'Ошибка по умолчанию.';
+const WRONG_EMAIL = 'Некорректный email';
+const WRONG_EMAIL_OR_PASSWORD = 'Неправильные почта или пароль';
+
 module.exports = {
   ERROR_CODE_BAD_REQUEST,
   ERROR_CODE_NOT_FOUND,
@@ -53,4 +57,7 @@ module.exports = {
   EMAIL_ALREADY_EXISTS,
   WRONG_URL_FORMAT,
   AUTHORIZATION_REQUIRED,
+  SERVER_ERROR,
+  WRONG_EMAIL,
+  WRONG_EMAIL_OR_PASSWORD,
 };

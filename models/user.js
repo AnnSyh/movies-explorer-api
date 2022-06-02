@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const isEmail = require('validator/lib/isEmail');
-const bcrypt = require('bcrypt'); // импортируем bcrypt ?? bcryptjs
+const bcrypt = require('bcrypt'); // импортируем bcrypt
 
-const { ERROR_CODE_BAD_AUTH } = require('../utils/constants');
+const { WRONG_EMAIL, ERROR_CODE_BAD_AUTH, WRONG_EMAIL_OR_PASSWORD } = require('../utils/constants');
 
 // Опишем схему:
 const userSchema = new mongoose.Schema({
@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
     validate: {
       validator: (value) => isEmail(value),
-      message: 'Некорректный email',
+      message: WRONG_EMAIL,
     },
   },
   password: {
@@ -32,12 +32,12 @@ userSchema.statics.findUserByCredentials = function findUser(email, password) {
   return this.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
-        return Promise.reject(new ERROR_CODE_BAD_AUTH('Неправильные почта или пароль'));
+        return Promise.reject(new ERROR_CODE_BAD_AUTH(WRONG_EMAIL_OR_PASSWORD));
       }
       return bcrypt.compare(password, user.password)
         .then((matched) => {
           if (!matched) {
-            return Promise.reject(new ERROR_CODE_BAD_AUTH('Неправильные почта или пароль'));
+            return Promise.reject(new ERROR_CODE_BAD_AUTH(WRONG_EMAIL_OR_PASSWORD));
           }
           return user;
         });

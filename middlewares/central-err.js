@@ -1,4 +1,4 @@
-const { ERROR_CODE_INTERNAL } = require('../utils/constants');
+const { ERROR_CODE_INTERNAL, SERVER_ERROR } = require('../utils/constants');
 
 module.exports = (err, req, res, next) => {
   const { statusCode = ERROR_CODE_INTERNAL, message } = err;
@@ -6,7 +6,8 @@ module.exports = (err, req, res, next) => {
     .status(statusCode)
     .send({
       message: statusCode === ERROR_CODE_INTERNAL
-        ? `err.name = ${err.name} ; err.message = ${err.message} ; Ошибка по умолчанию.`
+        // ? `err.name = ${err.name} ; err.message = ${err.message} ; Ошибка по умолчанию.`
+        ? SERVER_ERROR
         : message,
     });
   return next();
